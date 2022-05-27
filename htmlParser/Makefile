@@ -4,7 +4,7 @@ parser-html.exe : lex.yy.o y.tab.o p-html.o
 p-html.o : p-html.c
 	gcc -c p-html.c
 
-lex.yy.o : lex.yy.c 
+lex.yy.o : lex.yy.c
 	gcc -c lex.yy.c
 
 y.tab.o : y.tab.c

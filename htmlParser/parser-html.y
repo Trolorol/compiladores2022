@@ -1,4 +1,3 @@
-%token <text> TEXT A END_A IMG TABLE END_TABLE P END_P TR END_TR TH END_TH TD END_TD BR FORM END_FORM LABEL END_LABEL INPUT END_INPUT
 %{
 int yylex(void);
 #include <stdio.h>
@@ -16,6 +15,8 @@ extern FILE * yyout;
 %union{
 	char* text;
 }
+%token <text> TEXT A END_A IMG TABLE END_TABLE P END_P TR END_TR TH END_TH TD END_TD BR FORM END_FORM LABEL END_LABEL INPUT END_INPUT
+
 
 %%
 

@@ -1,0 +1,10 @@
+#bananas {
+  width: auto;
+  display: grid;
+}
+
+#potatos {
+  color: red;
+  display: flex;
+  width: 10em;
+}
