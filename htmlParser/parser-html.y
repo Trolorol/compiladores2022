@@ -38,8 +38,8 @@ seq_head_tag:	head_tag
 			|	seq_head_tag head_tag
 			;
 
-head_tag:		TITLE TEXT { printf("\t%s\n", $2); } END_TITLE { printf("parsed title.\n"); }
-			|	LINK seq_tag_propty '>' { printf("parsed link.\n"); }
+head_tag:		TITLE TEXT { if (elem_type == 1) printf("\t%s\n", $2); } END_TITLE { if (elem_type == 1) printf("parsed title.\n"); }
+			|	LINK seq_link_tag_propty '>' { if (elem_type == 2) printf("parsed head link.\n"); }
 			;
 
 body:			BODY END_BODY { printf("empty body.\n"); }
@@ -59,81 +59,91 @@ body_tag:		h1
 			|	form
 			;
 
-/*---------- TEXT ----------*/
+/*---------- 1.TEXT ----------*/
 	
-h1:				H1 END_H1 { printf("empty header.\n"); }
-			|	H1 TEXT { printf("\t%s\n", $2); } END_H1 { printf("parsed header.\n"); }
+h1:				H1 END_H1 { if (elem_type == 1) printf("empty header.\n"); }
+			|	H1 TEXT { if (elem_type == 1) printf("\t%s\n", $2); } END_H1 { if (elem_type == 1) printf("parsed header.\n"); }
 			;
 
-p:				P END_P { printf("empty paragraph.\n"); }
-			|	P TEXT { printf("\t%s\n", $2); } END_P { printf("parsed paragraph.\n"); }
+p:				P END_P { if (elem_type == 1) printf("empty paragraph.\n"); }
+			|	P TEXT { if (elem_type == 1) printf("\t%s\n", $2); } END_P { if (elem_type == 1) printf("parsed paragraph.\n"); }
 			;
 			
-br:				BR { printf("parsed line break.\n"); };
+br:				BR;
 			
-/*---------- LINK ----------*/
+/*---------- 2.LINK ----------*/
 			
-a:				A seq_tag_propty '>' END_A { printf("parsed url with no text.\n"); }
-			|	A seq_tag_propty '>' TEXT { printf("parsed url: %s.\n", $4); } END_A
+a:				A seq_link_tag_propty '>' END_A { if (elem_type == 2) printf("parsed link with no text.\n"); }
+			|	A seq_link_tag_propty '>' TEXT { if (elem_type == 2) printf("parsed link: %s.\n", $4); } END_A
 			|	a a
 			;
 			
-/*---------- IMAGE ----------*/
-
-img:			IMG seq_tag_propty '>' { printf("parsed image.\n"); }
-			|	img img
+seq_link_tag_propty:	link_tag_propty
+			|			seq_link_tag_propty link_tag_propty 
 			;
 
-/*---------- TABLE ----------*/
+link_tag_propty:		TEXT { if (elem_type == 2) printf("\t%s: ", $1); } '=' '"' TEXT { if (elem_type == 2) printf("%s\n", $5);} '"';
+			
+/*---------- 3.IMAGE ----------*/
 
-table:			TABLE END_TABLE { printf("empty table.\n"); }
-			|	TABLE { row_ctr = 0; col_ctr = 0; max_col_ctr = 0; } seq_table_rows END_TABLE { printf("parsed table. %d rows, %d columns\n", row_ctr, max_col_ctr); }
+img:					IMG seq_img_tag_propty '>' { if (elem_type == 3) printf("parsed image.\n"); }
+			|			img img
+			;
+
+seq_img_tag_propty:		img_tag_propty
+			|			seq_img_tag_propty img_tag_propty 
+			;
+
+img_tag_propty:			TEXT { if (elem_type == 3) printf("\t%s: ", $1); } '=' '"' TEXT { if (elem_type == 3) printf("%s\n", $5);} '"';
+
+/*---------- 4.TABLE ----------*/
+
+table:			TABLE END_TABLE { if (elem_type == 4) printf("empty table.\n"); }
+			|	TABLE { row_ctr = 0; col_ctr = 0; max_col_ctr = 0; } seq_table_rows END_TABLE { if (elem_type == 4) printf("parsed table. %d rows, %d columns\n", row_ctr, max_col_ctr); }
 			;
 			
 seq_table_rows:	table_r
 			|	seq_table_rows table_r
 			;
 			
-table_r:		TR END_TR { row_ctr++; col_ctr = 0; printf("row %d (empty)\n", row_ctr); }
-			|	TR seq_table_cell END_TR { row_ctr++; col_ctr = 0; printf("row %d\n", row_ctr); }
+table_r:		TR END_TR { row_ctr++; col_ctr = 0; if (elem_type == 4) printf("row %d (empty)\n", row_ctr); }
+			|	TR seq_table_cell END_TR { row_ctr++; col_ctr = 0; if (elem_type == 4) printf("row %d\n", row_ctr); }
 			;
 			
 seq_table_cell:	table_cell
 			|	seq_table_cell table_cell
 			;
 
-table_cell:		TH END_TH { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; printf("\tempty table header\n"); }
-			|	TH { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; printf("\theader cell:\n"); } table_cell_val END_TH 
-			|	TD END_TD { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; printf("\tempty table data\n"); }
-			|	TD { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; printf("\tdata cell:\n"); } table_cell_val END_TD	
+table_cell:		TH END_TH { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; if (elem_type == 4) printf("\tempty table header\n"); }
+			|	TH { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; if (elem_type == 4) printf("\theader cell:\n"); } table_cell_val END_TH 
+			|	TD END_TD { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; if (elem_type == 4) printf("\tempty table data\n"); }
+			|	TD { col_ctr++; if(col_ctr > max_col_ctr) max_col_ctr = col_ctr; if (elem_type == 4) printf("\tdata cell:\n"); } table_cell_val END_TD	
 			;
 			
-table_cell_val:	TEXT { printf("\t%s\n", $1); }
+table_cell_val:	TEXT { if (elem_type == 4) printf("\t%s\n", $1); }
 			|	a
 			|	img
 			;
 			
-/*---------- FORM ----------*/
+/*---------- 5.FORM ----------*/
 
-form:			FORM END_FORM { printf("empty form.\n"); }
-			|	FORM seq_form_element END_FORM { printf("parsed form.\n"); }
+form:			FORM END_FORM { if (elem_type == 5) printf("empty form.\n"); }
+			|	FORM seq_form_element END_FORM { if (elem_type == 5) printf("parsed form.\n"); }
 			;
 			
 seq_form_element:	form_element
 			|		seq_form_element form_element
 			;
 			
-form_element:	LABEL seq_tag_propty '>' TEXT { printf("\ttext: %s\n", $4); } END_LABEL { printf("parsed form label\n"); }
-			|	INPUT seq_tag_propty '>' { printf("parsed form input\n"); }
+form_element:	LABEL seq_form_tag_propty '>' TEXT { if (elem_type == 5) printf("\ttext: %s\n", $4); } END_LABEL { if (elem_type == 5) printf("parsed form label\n"); }
+			|	INPUT seq_form_tag_propty '>' { if (elem_type == 5) printf("parsed form input\n"); }
+			;
+			
+seq_form_tag_propty:	form_tag_propty
+			|			seq_form_tag_propty form_tag_propty 
 			;
 
-/*---------- HTML TAG PROPERTIES ----------*/
-
-seq_tag_propty:	tag_propty
-			|	seq_tag_propty tag_propty 
-			;
-
-tag_propty:	TEXT { printf("\t%s: ", $1); } '=' '"' TEXT { printf("%s\n", $5);} '"';
+form_tag_propty:		TEXT { if (elem_type == 5) printf("\t%s: ", $1); } '=' '"' TEXT { if (elem_type == 5) printf("%s\n", $5);} '"';
 
 %%
 
