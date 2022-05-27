@@ -16,7 +16,10 @@
 
 \<title\>				return TITLE;
 \<\/title\>				return END_TITLE;
+\<link					return LINK;
 
+\<h1\>					return H1;
+\<\/h1\>				return END_H1;
 \<p\>					return P;
 \<\/p\>					return END_P;
 
