@@ -1,15 +1,13 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-
 extern FILE * yyout;
 char out[50];
 int contC=0;
 int contL=0;
-
 %}
 
-%start ficheiro
+%start file
 
 
 %union{
@@ -17,22 +15,14 @@ int contL=0;
 	int intval;
  }
 
-%type <intval> estilo lista_prop lista_prop2 prop valpropriedade ficheiro
+%type <intval> style lista_prop lista_prop2 prop valpropriedade file
 %token <text> B_WORD CSSSELECTOR LEX_PX LEX_EM LEX_PERCENT LEX_DEG LEX_CM LEX_MM
 %token <intval> LEX_INT
-
-
 %%
 
-ficheiro: estilo;
+file: style;
 
-estilo:	B_WORD {strcpy(out,$1); printf("%s\n", out);} '{' lista_prop2 '}'|	estilo B_WORD {strcpy(out,$2); printf("%s\n", out);} '{' lista_prop2 '}';
-
-/* check_hierarchys: hierarchy | style;
-
-hierarchy: CSSSELECTOR */
-
-style:
+style:	B_WORD {strcpy(out,$1); printf("%s\n", out);} '{' lista_prop2 '}'|	style B_WORD {strcpy(out,$2); printf("%s\n", out);} '{' lista_prop2 '}';
 
 lista_prop: prop | lista_prop ';' prop;
 

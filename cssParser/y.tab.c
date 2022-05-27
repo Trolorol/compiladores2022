@@ -20,13 +20,11 @@
 #line 2 "yaccCss.y"
 #include <stdio.h>
 #include <stdlib.h>
-
 extern FILE * yyout;
 char out[50];
 int contC=0;
 int contL=0;
-
-#line 15 "yaccCss.y"
+#line 13 "yaccCss.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -38,7 +36,7 @@ typedef union{
 	int intval;
  } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 42 "y.tab.c"
+#line 40 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -71,62 +69,63 @@ typedef union{
 
 extern int YYPARSE_DECL();
 
-#define PALAVRA 257
-#define AFIM 258
-#define CSSSELECTOR 259
-#define LEX_PX 260
-#define LEX_EM 261
-#define LEX_PERCENT 262
-#define LEX_DEG 263
-#define LEX_CM 264
-#define LEX_MM 265
-#define LEX_INT 266
+#define B_WORD 257
+#define CSSSELECTOR 258
+#define LEX_PX 259
+#define LEX_EM 260
+#define LEX_PERCENT 261
+#define LEX_DEG 262
+#define LEX_CM 263
+#define LEX_MM 264
+#define LEX_INT 265
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,    6,    1,    7,    1,    8,    2,    2,    3,    3,
-    9,    4,    5,    5,    5,    5,    5,    5,    5,
+    0,    6,    1,    7,    1,    2,    2,    3,    3,    8,
+    4,    5,    5,    5,    5,    5,    5,    5,    5,
 };
 static const YYINT yylen[] = {                            2,
-    1,    0,    5,    0,    6,    0,    1,    3,    1,    2,
-    0,    4,    1,    1,    1,    1,    1,    1,    1,
+    1,    0,    5,    0,    6,    1,    3,    1,    2,    0,
+    4,    1,    1,    1,    1,    1,    1,    1,    1,
 };
 static const YYINT yydefred[] = {                         0,
-    2,    0,    0,    0,    4,    0,    0,   11,    0,    0,
-    7,    0,    0,    0,    3,    0,    0,    8,    5,   13,
-   15,   16,   17,   18,   19,   14,   12,
+    2,    0,    0,    0,    4,    0,    0,   10,    0,    0,
+    6,    0,    0,    0,    3,    0,    0,    7,    5,   12,
+   14,   15,   16,   17,   18,   19,   13,   11,
 };
 static const YYINT yydgoto[] = {                          2,
-    3,    9,   10,   11,   27,    4,    7,    0,   13,
+    3,    9,   10,   11,   28,    4,    7,   13,
 };
 static const YYINT yysindex[] = {                      -256,
-    0,    0, -255, -119,    0, -247, -112,    0,  -47, -111,
-    0, -247,  -45, -247,    0, -110, -257,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,
+    0,    0, -248, -113,    0, -246, -111,    0,  -46, -110,
+    0, -246,  -44, -246,    0, -109, -257,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,
 };
 static const YYINT yyrindex[] = {                         0,
-    0,    0,   16,    0,    0,    0,    0,    0, -108,    0,
-    0,    0,    0, -107,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,
+    0,    0,   17,    0,    0,    0,    0,    0, -107,    0,
+    0,    0,    0, -106,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,
 };
 static const YYINT yygindex[] = {                         0,
-    0,    0,    7,    6,    0,    0,    0,    0,    0,
+    0,    0,    8,    7,    0,    0,    0,    0,
 };
-#define YYTABLESIZE 20
+#define YYTABLESIZE 21
 static const YYINT yytable[] = {                         20,
-    1,    5,   21,    6,   22,   23,   24,   25,   26,    8,
-   12,   14,   17,   15,   19,    1,    9,   10,   16,   18,
+    1,   21,   22,   23,   24,   25,   26,   27,    5,    6,
+    8,   12,   14,   17,   15,   19,    1,    8,    9,   16,
+   18,
 };
 static const YYINT yycheck[] = {                        257,
-  257,  257,  260,  123,  262,  263,  264,  265,  266,  257,
-  123,   59,   58,  125,  125,    0,  125,  125,   12,   14,
+  257,  259,  260,  261,  262,  263,  264,  265,  257,  123,
+  257,  123,   59,   58,  125,  125,    0,  125,  125,   12,
+   14,
 };
 #define YYFINAL 2
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 266
-#define YYUNDFTOKEN 278
+#define YYMAXTOKEN 265
+#define YYUNDFTOKEN 276
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -137,27 +136,27 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,"'{'",0,"'}'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"PALAVRA","AFIM",
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"B_WORD",
 "CSSSELECTOR","LEX_PX","LEX_EM","LEX_PERCENT","LEX_DEG","LEX_CM","LEX_MM",
-"LEX_INT",0,0,0,0,0,0,0,0,0,0,0,"illegal-symbol",
+"LEX_INT",0,0,0,0,0,0,0,0,0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
-"$accept : ficheiro",
-"ficheiro : estilo",
+"$accept : file",
+"file : style",
 "$$1 :",
-"estilo : PALAVRA $$1 '{' lista_prop2 '}'",
+"style : B_WORD $$1 '{' lista_prop2 '}'",
 "$$2 :",
-"estilo : estilo PALAVRA $$2 '{' lista_prop2 '}'",
-"style :",
+"style : style B_WORD $$2 '{' lista_prop2 '}'",
 "lista_prop : prop",
 "lista_prop : lista_prop ';' prop",
 "lista_prop2 : lista_prop",
 "lista_prop2 : lista_prop ';'",
 "$$3 :",
-"prop : PALAVRA $$3 ':' valpropriedade",
-"valpropriedade : PALAVRA",
+"prop : B_WORD $$3 ':' valpropriedade",
+"valpropriedade : B_WORD",
 "valpropriedade : LEX_INT",
 "valpropriedade : LEX_PX",
+"valpropriedade : LEX_EM",
 "valpropriedade : LEX_PERCENT",
 "valpropriedade : LEX_DEG",
 "valpropriedade : LEX_CM",
@@ -199,9 +198,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 53 "yaccCss.y"
-
-
+#line 42 "yaccCss.y"
 
 int yylex();
 
@@ -209,7 +206,7 @@ int yyerror(char* s) {
 	printf("%s\n", s);
 }
 
-#line 213 "y.tab.c"
+#line 210 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -412,46 +409,50 @@ yyreduce:
     switch (yyn)
     {
 case 2:
-#line 29 "yaccCss.y"
+#line 25 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("%s\n", out);}
 break;
 case 4:
-#line 29 "yaccCss.y"
+#line 25 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("%s\n", out);}
 break;
-case 11:
-#line 41 "yaccCss.y"
+case 10:
+#line 31 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\t*%s = ", out);}
 break;
-case 13:
-#line 43 "yaccCss.y"
+case 12:
+#line 33 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("%s\n", out);}
 break;
-case 14:
-#line 44 "yaccCss.y"
+case 13:
+#line 34 "yaccCss.y"
 	{printf("%d\n",yystack.l_mark[0].intval);}
 break;
+case 14:
+#line 35 "yaccCss.y"
+	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
+break;
 case 15:
-#line 45 "yaccCss.y"
+#line 36 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
 break;
 case 16:
-#line 46 "yaccCss.y"
+#line 37 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
 break;
 case 17:
-#line 47 "yaccCss.y"
+#line 38 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
 break;
 case 18:
-#line 48 "yaccCss.y"
+#line 39 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
 break;
 case 19:
-#line 49 "yaccCss.y"
+#line 40 "yaccCss.y"
 	{strcpy(out,yystack.l_mark[0].text); printf("\%s\n", out);}
 break;
-#line 455 "y.tab.c"
+#line 456 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
