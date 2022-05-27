@@ -7,6 +7,13 @@
 
 %%
 
+\<html\>				return HTML;
+\<\/html\>				return END_HTML;
+\<head\>				return HEAD;
+\<\/head\>				return END_HEAD;
+\<body\>				return BODY;
+\<\/body\>				return END_BODY;
+
 \<p\>					return P;
 \<\/p\>					return END_P;
 
@@ -31,7 +38,6 @@
 \<label					return LABEL;
 \<\/label\>				return END_LABEL;
 \<input					return INPUT;
-\<\/input\>				return END_INPUT;
 
 [="/>]					return yytext[0];
 
