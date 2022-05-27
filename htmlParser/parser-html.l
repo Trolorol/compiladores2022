@@ -14,6 +14,9 @@
 \<body\>				return BODY;
 \<\/body\>				return END_BODY;
 
+\<title\>				return TITLE;
+\<\/title\>				return END_TITLE;
+
 \<p\>					return P;
 \<\/p\>					return END_P;
 

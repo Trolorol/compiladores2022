@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Title</title>
+	</head>
+	<body>
+		<img src="img_girl.jpg" alt="Girl in a jacket" width="500px" height="600">
+		<img src="img.jpg" alt="Boy" width="22" height="300">
+		<img src="test.png" alt="test" width="300px" height="100">
+
+		<a href="https://severalnines.com" id="s9s">SeveralNines</a>
+		<a href="https://www.w3schools.com" class="w3class" id="w3id" onclick="w3method()"></a>
+		<a id="iade" class="3ano" href="https://iade.pt"></a>
+
+		<p></p>
+
+		<p>Lorem ipsum</p>
+
+		<table></table>
+
+		<table>
+			<tr>
+				<th>Ola</th>
+				<th>Mundo</th>
+			</tr>
+			<tr>
+				<td>Hello</td>
+				<th>World</th>
+				<td></td>
+			</tr>
+			<tr>
+				<td><img src="img.jpg" alt="Boy" width="22" height="300"></td>
+				<th><a href="https://semtexto.com" id="semtexto"></a></th>
+			</tr>
+		</table>
+
+		<br>
+
+		<form></form>
+
+		<form>
+			<label for="fname">First name:</label>
+			<input type="text" id="fname" name="fname">
+			
+			<input type="radio" id="html" name="fav_language" value="HTML">
+			<label for="html">HTML</label>
+			
+			<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+			<label for="vehicle1">I have a bike</label>
+		</form>
+	</body>
+</html>

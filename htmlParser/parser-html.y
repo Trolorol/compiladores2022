@@ -1,4 +1,4 @@
-%token <text> HTML END_HTML HEAD END_HEAD BODY END_BODY TEXT A END_A IMG TABLE END_TABLE P END_P TR END_TR TH END_TH TD END_TD BR FORM END_FORM LABEL END_LABEL INPUT
+%token <text> HTML END_HTML HEAD END_HEAD TITLE END_TITLE BODY END_BODY TEXT A END_A IMG TABLE END_TABLE P END_P TR END_TR TH END_TH TD END_TD BR FORM END_FORM LABEL END_LABEL INPUT
 %{
 int yylex(void);
 #include <stdio.h>
@@ -10,7 +10,7 @@ extern FILE * yyout;
  }
 %}
 
-%start tag
+%start html
 
 %union{
 	char* text;
@@ -19,91 +19,111 @@ extern FILE * yyout;
 %%
 
 /*---------- START ----------*/
-
-tag:			tag_html
-			|	tag tag_html
+			
+html:			HTML TEXT END_HTML { printf("empty html document.\n"); }
+			|	HTML head END_HTML { printf("html with no body.\n"); }
+			|	HTML body END_HTML { printf("html with no head.\n"); }
+			|	HTML head body END_HTML { printf("END html document.\n"); }
+			;
+			
+head:			HEAD END_HEAD { printf("empty head.\n"); }
+			|	HEAD seq_head_tag END_HEAD { printf("--- parsed head.\n"); }
 			;
 
-tag_html:		tag_p
-			|	tag_br
-			|	tag_href
-			|	tag_img
-			|	tag_table
-			|	tag_form
+seq_head_tag:	head_tag
+			|	seq_head_tag head_tag
+			;
+
+head_tag:		TITLE TEXT { printf("\t%s\n", $2); } END_TITLE { printf("parsed title.\n"); }
+			;
+
+body:			BODY END_BODY { printf("empty body.\n"); }
+			|	BODY seq_body_tag END_BODY { printf("--- parsed body.\n"); }
+			;
+
+seq_body_tag:	body_tag
+			|	seq_body_tag body_tag
+			;
+
+body_tag:		p
+			|	br
+			|	a
+			|	img
+			|	table
+			|	form
 			;
 
 /*---------- TEXT ----------*/
 	
-tag_p:			P END_P { printf("empty paragraph.\n"); }
+p:				P END_P { printf("empty paragraph.\n"); }
 			|	P TEXT { printf("\t%s\n", $2); } END_P { printf("parsed paragraph.\n"); }
-			;
+				;
 			
-tag_br:			BR { printf("parsed line break.\n"); };
+br:				BR { printf("parsed line break.\n"); };
 			
 /*---------- LINK ----------*/
 			
-tag_href:		A seq_html_propty '>' END_A { printf("parsed link with no text.\n"); }
-			|	A seq_html_propty '>' TEXT { printf("parsed link: %s.\n", $4); } END_A
-			|	tag_href tag_href
+a:				A seq_html_tag_propty '>' END_A { printf("parsed link with no text.\n"); }
+			|	A seq_html_tag_propty '>' TEXT { printf("parsed link: %s.\n", $4); } END_A
+			|	a a
 			;
 			
 /*---------- IMAGE ----------*/
 
-tag_img:		IMG seq_html_propty '>' { printf("parsed image.\n"); }
-			|	tag_img tag_img
+img:			IMG seq_html_tag_propty '>' { printf("parsed image.\n"); }
+			|	img img
 			;
 
 /*---------- TABLE ----------*/
 
-tag_table:		TABLE END_TABLE { printf("empty table.\n"); }
+table:			TABLE END_TABLE { printf("empty table.\n"); }
 			|	TABLE seq_table_rows END_TABLE { printf("parsed table.\n"); }
 			;
 			
-seq_table_rows:	tag_table_r
-			|	seq_table_rows tag_table_r
+seq_table_rows:	table_r
+			|	seq_table_rows table_r
 			;
 			
-tag_table_r:	TR END_TR { printf("empty table row\n"); }
+table_r:		TR END_TR { printf("empty table row\n"); }
 			|	TR seq_table_cell END_TR { printf("parsed table row\n"); }
 			;
 			
-seq_table_cell:	tag_table_cell
-			|	seq_table_cell tag_table_cell
+seq_table_cell:	table_cell
+			|	seq_table_cell table_cell
 			;
 
-tag_table_cell:	TH END_TH { printf("\tempty table header\n"); }
+table_cell:		TH END_TH { printf("\tempty table header\n"); }
 			|	TH { printf("\theader cell:\n"); } table_cell_val END_TH 
 			|	TD END_TD { printf("\tempty table data\n"); }
 			|	TD { printf("\tdata cell:\n"); } table_cell_val END_TD	
 			;
 			
 table_cell_val:	TEXT { printf("\t%s\n", $1); }
-			|	tag_href
-			|	tag_img
+			|	a
+			|	img
 			;
 			
 /*---------- FORM ----------*/
 
-tag_form:		FORM END_FORM { printf("empty form.\n"); }
+form:			FORM END_FORM { printf("empty form.\n"); }
 			|	FORM seq_form_element END_FORM { printf("parsed form.\n"); }
 			;
 			
-seq_form_element:	tag_form_element
-			|		seq_form_element tag_form_element
+seq_form_element:	form_element
+			|		seq_form_element form_element
 			;
 			
-tag_form_element:	LABEL seq_html_propty '>' TEXT { printf("\ttext: %s\n", $4); } END_LABEL { printf("parsed form label\n"); }
-			|		INPUT seq_html_propty '>' { printf("parsed form input\n"); }
+form_element:	LABEL seq_html_tag_propty '>' TEXT { printf("\ttext: %s\n", $4); } END_LABEL { printf("parsed form label\n"); }
+			|	INPUT seq_html_tag_propty '>' { printf("parsed form input\n"); }
 			;
 
 /*---------- HTML TAG PROPERTIES ----------*/
 
-seq_html_propty:		html_propty
-					|	seq_html_propty html_propty 
+seq_html_tag_propty:	html_tag_propty
+					|	seq_html_tag_propty html_tag_propty 
 					;
 
-html_propty:		TEXT { printf("\t%s = ", $1); } '=' '"' TEXT { printf("%s\n", $5);} '"'
-			;
+html_tag_propty:	TEXT { printf("\t%s = ", $1); } '=' '"' TEXT { printf("%s\n", $5);} '"';
 
 %%
 
