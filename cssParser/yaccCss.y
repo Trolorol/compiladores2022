@@ -4,8 +4,6 @@
 
 extern FILE * yyout;
 char out[50];
-int contC=0;
-int contL=0;
 
 %}
 
@@ -17,37 +15,33 @@ int contL=0;
 	int intval;
  }
 
-%type <intval> estilo lista_prop lista_prop2 prop valpropriedade ficheiro
-%token <text> B_WORD CSSSELECTOR LEX_PX LEX_EM LEX_PERCENT LEX_DEG LEX_CM LEX_MM
+%token <text> B_WORD CSSSELECTOR COLOR ALIGN_ITEMS ALIGN_CONTENT MARGIN WIDTH DISPLAY LEX_AUTO LEX_PX LEX_EM LEX_PERCENT GRID FLEX B_HEXCOLOR
 %token <intval> LEX_INT
 
 
 %%
 
-ficheiro: estilo;
+ficheiro: style;
 
-estilo:	B_WORD {strcpy(out,$1); printf("%s\n", out);} '{' lista_prop2 '}'|	estilo B_WORD {strcpy(out,$2); printf("%s\n", out);} '{' lista_prop2 '}';
+style:	B_WORD {strcpy(out,$1); printf("%s\n", out);} '{' lista_prop2 '}' 
+		|	style B_WORD {strcpy(out,$2); printf("%s\n", out);} '{' lista_prop2 '}' 
+		;
+		
 
-/* check_hierarchys: hierarchy | style;
+lista_prop: prop
+				|	lista_prop ';' prop 
+				;
 
-hierarchy: CSSSELECTOR */
+lista_prop2 : lista_prop
+					| lista_prop ';' 
+					;
+					
+prop: B_WORD {strcpy(out,$1); printf("\t*%s = ", out);} ':' valpropriedade 
+		;
+		
+valpropriedade: B_WORD {strcpy(out,$1); printf("%s\n", out);} | LEX_INT {printf("%d\n",$1);} | LEX_PX {strcpy(out,$1); printf("%s\n", out);};
 
-style:
 
-lista_prop: prop | lista_prop ';' prop;
-
-lista_prop2 : lista_prop | lista_prop ';';
-
-prop: B_WORD {strcpy(out,$1); printf("\t*%s = ", out);} ':' valpropriedade;
-
-valpropriedade: B_WORD {strcpy(out,$1); printf("%s\n", out);} |
-LEX_INT {printf("%d\n",$1);} |
-LEX_PX {strcpy(out,$1); printf("\%s\n", out);} |
-LEX_EM {strcpy(out,$1); printf("\%s\n", out);} |
-LEX_PERCENT {strcpy(out,$1); printf("\%s\n", out);} |
-LEX_DEG {strcpy(out,$1); printf("\%s\n", out);} |
-LEX_CM {strcpy(out,$1); printf("\%s\n", out);} |
-LEX_MM {strcpy(out,$1); printf("\%s\n", out);};
 %%
 
 int yylex();
@@ -56,3 +50,30 @@ int yyerror(char* s) {
 	printf("%s\n", s);
 }
 
+
+
+/* style:	B_WORD {strcpy(out,$1); printf("%s\n", out);}  '{' lista_prop '}' | style B_WORD {strcpy(out,$2); printf("%s\n", out);} '{' lista_prop '}'; */
+
+/* lista_prop: prop ';' | lista_prop ';' prop ';'; */
+
+/* prop: B_WORD {strcpy(out,$1); printf("\t*%s = ", out);} ':' valpropriedade; */
+
+//Quantos $$ user em aux
+
+	/* COLOR {strcpy(out,$1); printf("\t*%s = ", out);} |
+	ALIGN_ITEMS {strcpy(out,$1); printf("\t*%s = ", out);} |
+	ALIGN_CONTENT {strcpy(out,$1); printf("\t*%s = ", out);} |
+	MARGIN {strcpy(out,$1); printf("\t*%s = ", out);} |
+	WIDTH {strcpy(out,$1); printf("\t*%s = ", out);} |
+	DISPLAY {strcpy(out,$1); printf("\t*%s = ", out);} */
+
+
+/* valpropriedade: B_WORD {strcpy(out,$1); printf("%s\n", out);} | LEX_PX {strcpy(out,$1); printf("%s\n", out);} | LEX_INT {printf("%d\n",$1);} | */
+/*
+LEX_AUTO {strcpy(out,$1); printf("%s\n", out);} |
+
+LEX_EM {strcpy(out,$1); printf("%s\n", out);} |
+LEX_PERCENT {strcpy(out,$1); printf("%s\n", out);} |
+GRID {strcpy(out,$1); printf("%s\n", out);} |
+FLEX {strcpy(out,$1); printf("%s\n", out);} |
+B_HEXCOLOR {strcpy(out,$1); printf("%s\n", out);} */

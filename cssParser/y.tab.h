@@ -1,13 +1,19 @@
-#define PALAVRA 257
-#define AFIM 258
-#define CSSSELECTOR 259
-#define LEX_PX 260
-#define LEX_EM 261
-#define LEX_PERCENT 262
-#define LEX_DEG 263
-#define LEX_CM 264
-#define LEX_MM 265
-#define LEX_INT 266
+#define B_WORD 257
+#define CSSSELECTOR 258
+#define COLOR 259
+#define ALIGN_ITEMS 260
+#define ALIGN_CONTENT 261
+#define MARGIN 262
+#define WIDTH 263
+#define DISPLAY 264
+#define LEX_AUTO 265
+#define LEX_PX 266
+#define LEX_EM 267
+#define LEX_PERCENT 268
+#define GRID 269
+#define FLEX 270
+#define B_HEXCOLOR 271
+#define LEX_INT 272
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
